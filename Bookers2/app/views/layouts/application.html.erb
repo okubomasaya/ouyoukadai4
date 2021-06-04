@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookers2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <%= link_to "Bookers", "/", class:"navbar-brand" %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+              <% if user_signed_in? %>
+                <li>
+                  <%= link_to user_path(current_user.id) do %>
+                    <i class="fas fa-home nav-link text-light"> Home</i>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to users_path do %>
+                    <i class="fas fa-users nav-link text-light"> Users</i>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to books_path do %>
+                    <i class="fas fa-book-open nav-link text-light"> Books</i>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to destroy_user_session_path, method: :delete do %>
+                    <i class="fas fa-sign-out-alt nav-link text-light"> logout</i>
+                  <% end %>
+                </li>
+              <% else %>
+                <li>
+                  <%= link_to root_path do %>
+                    <i class="fas fa-home nav-link text-light"> Home</i>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to home_about_path do %>
+                    <span class="fas fa-link nav-link text-light"> About</span>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to new_user_registration_path do %>
+                    <i class="fas fa-user-plus nav-link text-light"> sign up</i>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to new_user_session_path do %>
+                    <i class="fas fa-sign-in-alt nav-link text-light"> login</i>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <p id="notice"><%= flash[:notice] %></p>
+      <div class="container px-5 px-sm-0">
+        <% if @book_new && @book_new.errors.any? %>
+          <div id="error_explanation">
+            <h3><%= @book_new.errors.count %> errors prohibited this obj from being saved:</h3>
+            <ul>
+              <% @book_new.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+
+    <%= yield %>
+
+    <footer>
+  <div class="container mt-5">
+  	<div class="row">
+    	<div class="mx-auto">
+    		<p>CopyRight Infratop.inc</p>
+    	</div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
